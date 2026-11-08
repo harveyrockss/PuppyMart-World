@@ -1151,7 +1151,7 @@ addEventListener('beforeunload',save);
 sc=buildWorld(BIOMES[S.country]?S.country:'au');P.x=sc.spawn.x;P.y=sc.spawn.y;setComp();
 requestAnimationFrame(loop);
 window.__pm={drawHuman,AV,friends,S,updBfly,goCafe,cookModal,pantryModal,accModal,questsModal,serve,addXP,checkQuests,darkAmt,emote,setComp,get CO(){return CO},get sc(){return sc},P,act,startCatch,tryCatch,goHome,goWorld,get catchS(){return catchS}};
-if("serviceWorker" in navigator&&location.protocol.startsWith('http'))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+if("serviceWorker" in navigator&&location.protocol.startsWith('http')){const had=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl){rl=1;location.reload()}});addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}))}
 })();
 </script>
 </body>
