@@ -88,6 +88,7 @@ textarea{height:70px;resize:none}
  <button class="rb" data-m="cafe" id="cafeb" title="Café">🍳</button>
  <button class="rb" data-m="quests" title="Quests">📜</button>
  <button class="rb" data-m="acc" title="Accessories">🎩</button>
+ <button class="rb" data-m="menu" title="Menu">☰</button>
  <button class="rb" data-m="decor" id="decb" title="Decorate" style="display:none">🔨</button>
 </div>
 <div id="bar"></div>
@@ -98,6 +99,7 @@ textarea{height:70px;resize:none}
 <button class="eb" id="em2" style="right:112px;bottom:82px" title="Wave">👋</button>
 <div id="modal"><div id="mbox"><button id="mx">✕</button><div id="mc"></div></div></div>
 <div id="fade"></div>
+<div id="bye" style="display:none;position:fixed;inset:0;z-index:99;background:linear-gradient(160deg,#e9d8fa,#c9b6ee);flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;color:#5a3a7a;font-family:ui-rounded,system-ui,sans-serif"><div style="font-size:54px">👋🐶</div><h2 id="byet" style="margin:0">See you soon!</h2><p style="max-width:300px;margin:0">Your game is saved. You can close this app now: swipe up from the bottom and flick PuppyMart away.</p><button class="go" id="byeb">↩ Back to game</button></div>
 <div id="title">
  <div style="font-size:46px">🐶🌍✨</div>
  <h1>PuppyMart World</h1>
@@ -988,6 +990,13 @@ function friends(){
 }
 function visit(d){S.st.visits=(S.st.visits||0)+1;save();const y=buildYard(d,false);enter(y,"👋 Visiting "+d.n+"'s home")}
 
+function menuModal(){
+ openModal(`<h2>☰ Menu</h2><button class="big" id="mresume">▶ Resume</button><button class="big alt" id="mtitle" style="margin-top:8px">🧑‍🎤 Switch explorer / title screen</button><button class="big alt" id="mexit" style="margin-top:8px">💾 Save &amp; exit</button><div style="font-size:13px;opacity:.7;margin-top:10px">Your game saves automatically as you play.</div>`,()=>{
+  $('mresume').onclick=closeModal;
+  $('mtitle').onclick=()=>{closeModal();save();target=null;pick=S.prof?S.prof.av:0;$('nm').value=S.prof?S.prof.n:'';buildPicker();$('start').textContent='Continue';$('title').style.display=''};
+  $('mexit').onclick=()=>{closeModal();save();target=null;$('byet').textContent='See you soon'+(S.prof?', '+S.prof.n:'')+'!';$('bye').style.display='flex'};
+ });
+}
 /* ---- decorate bar ---- */
 function barHtml(){
  return Object.entries(DECOR).map(([k,v])=>`<button data-t="${k}" class="${tool===k?'sel':''}">${v.e} ${v.cost}🪙</button>`).join('')+`<button data-t="erase" class="${tool==='erase'?'sel':''}">🧹</button>`+HCOLS.map(c=>`<button class="hc" data-hc="${c}" style="background:${c}"></button>`).join('');
@@ -1013,10 +1022,11 @@ cv.addEventListener('pointerdown',e=>{if(!started||modalOpen()||$('title').style
 $('act').addEventListener('pointerdown',e=>{e.stopPropagation();act()});
 $('side').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!started)return;const m=b.dataset.m;
  if(m==='travel')travel();else if(m==='kennel')kennel();else if(m==='passport')passport();else if(m==='friends')friends();
- else if(m==='quests')questsModal();else if(m==='acc')accModal();
+ else if(m==='quests')questsModal();else if(m==='acc')accModal();else if(m==='menu')menuModal();
  else if(m==='cafe'){if(sc.kind==='cafe')goWorld(S.country||'au');else goCafe()}
  else if(m==='home'){if(sc.kind==='world')goHome();else goWorld(S.country||'au')}
  else if(m==='decor'){edit=!edit;showBar()}});
+$('byeb').onclick=()=>{$('bye').style.display='none'};
 $('em1').addEventListener('pointerdown',e=>{e.stopPropagation();emote('😊')});
 $('em2').addEventListener('pointerdown',e=>{e.stopPropagation();emote('👋')});
 
