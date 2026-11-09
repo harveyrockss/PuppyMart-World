@@ -23,13 +23,17 @@ a.btn{text-decoration:none;display:inline-block}
 .dst{border:2px solid #dde6f0;background:#f6f9fd;border-radius:16px;padding:10px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;font:inherit;color:inherit}.dst:active{transform:scale(.97)}.dst.cur{border-color:#ff8fb8;background:#fff2f8}.dst .fl{font-size:26px}.dst small{opacity:.65;font-weight:500}.dst i{font-style:normal;color:#e0709a}
 .dx{margin:8px 0;padding:8px 10px;background:#f6f9fd;border-radius:12px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.dx b{flex:100%}.dx span{opacity:.5}.dx span.got{opacity:1;color:#2a7a4a}.dx em{font-style:normal;font-size:11px;opacity:.6}
 .x{margin-top:12px;width:100%;padding:10px;border:0;border-radius:14px;background:#ff8fb8;color:#fff;font:800 15px system-ui;cursor:pointer}
+#act{position:fixed;right:14px;bottom:92px;width:88px;height:88px;border-radius:50%;border:4px solid #fff;background:radial-gradient(circle at 35% 30%,#ffd6e8,#f08cb5);color:#fff;font:800 16px system-ui;z-index:16;box-shadow:0 4px 14px rgba(0,0,0,.3);cursor:pointer;touch-action:none;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+#act.catch{animation:pul .8s infinite;background:radial-gradient(circle at 35% 30%,#fff3a8,#ffb23d)}@keyframes pul{50%{transform:scale(1.12);box-shadow:0 0 0 10px rgba(255,200,80,.35)}}
+#cbar{position:relative;height:34px;background:#e8eef6;border-radius:17px;margin:14px 6px}#czone{position:absolute;top:0;bottom:0;background:#6fd48a;border-radius:17px}#cmark{position:absolute;top:-5px;bottom:-5px;width:9px;margin-left:-4px;background:#ff5a8a;border-radius:5px;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+@media(pointer:coarse){#act{bottom:176px}#cam{bottom:20px}}
 </style></head><body>
 <div id="load">🐶 Loading island…</div>
-<div class="hud" id="top"><div class="pill">🪙 <span id="coins">0</span></div><div class="pill">🐾 <span id="found">0 / 3</span></div><a class="btn" href="./index.html">⬅ 2D game</a><div class="pill" id="place"></div></div>
+<div class="hud" id="top"><div class="pill">🪙 <span id="coins">0</span></div><div class="pill">🐾 <span id="found">0</span></div><a class="btn" href="./index.html">⬅ 2D game</a><div class="pill" id="place"></div><div class="pill" id="hidp">🌿 0 hiding</div></div>
 <div class="hud" id="cam"><div class="btn" id="rotL">⟲</div><div class="btn" id="rotR">⟳</div><div class="btn" id="zIn">＋</div><div class="btn" id="zOut">－</div></div>
 <div class="hud" id="right"><div class="btn" id="btnTravel">🌍 Travel</div><div class="btn" id="btnDex">📖 Dex</div><div class="btn" id="btnTime">☀️ Day</div><div class="btn" id="btnLook">👤 Look</div><div class="btn" id="btnQ">⚙ Med</div></div>
-<div class="hud" id="help">Hold or click = walk there · WASD / arrows · Shift run · right-drag or ⟲⟳ / Q E = turn · wheel = zoom · T time · L look</div>
-<div class="hud" id="fps"></div><div id="modal"></div><div id="toast"></div>
+<div class="hud" id="help">Hold or click = walk there · Space/F = Act · WASD / arrows · Shift run · right-drag or ⟲⟳ / Q E = turn · wheel = zoom · T time · L look</div>
+<div class="hud" id="fps"></div><button id="act">✋ Act</button><div id="modal"></div><div id="toast"></div>
 <div id="joy"><div id="joyk"></div></div>
 <script type="module" src="./world3d.bundle.js"></script>
 <script>addEventListener('load',()=>setTimeout(()=>{var l=document.getElementById('load');l.style.opacity=0;setTimeout(()=>l.remove(),700)},400))</script>
