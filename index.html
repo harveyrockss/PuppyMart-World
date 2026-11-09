@@ -587,14 +587,14 @@ function forestFloor(g,w,h,B,sd){
  const dry=B.tree==='gum'||B.tree==='cactus';g.fillStyle=dream?'rgba(10,10,50,.12)':dry?'rgba(90,60,20,.08)':'rgba(8,36,22,.14)';g.fillRect(0,0,w,h);
  const blot=(x,y,rx,ry,c)=>{g.save();g.translate(x,y);g.scale(1,ry/rx);const gr=g.createRadialGradient(0,0,0,0,0,rx);gr.addColorStop(0,c);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.beginPath();g.arc(0,0,rx,0,6.3);g.fill();g.restore()};
  if(!dream){
-  for(let i=0;i<300;i++)blot(rn()*w,rn()*h,22+rn()*60,12+rn()*30,dry?(rn()<.5?'rgba(214,180,100,.3)':'rgba(150,110,60,.2)'):(rn()<.55?'rgba(84,134,58,.3)':'rgba(34,78,40,.2)'));
-  for(let i=0;i<70;i++)blot(rn()*w,rn()*h,20+rn()*46,10+rn()*22,'rgba(105,76,46,.3)');
+  for(let i=0;i<170;i++)blot(rn()*w,rn()*h,30+rn()*70,16+rn()*34,dry?(rn()<.5?'rgba(214,180,100,.3)':'rgba(150,110,60,.2)'):(rn()<.55?'rgba(84,134,58,.3)':'rgba(34,78,40,.2)'));
+  for(let i=0;i<40;i++)blot(rn()*w,rn()*h,26+rn()*54,13+rn()*26,'rgba(105,76,46,.3)');
   const lit=B.tree==='sakura'?['#f4b6cf','#e98cb0','#c26a8c','#7a5a40']:B.tree==='pine'?['#8a5a34','#6d4527','#a8743f','#4f3a22']:B.tree==='gum'?['#c9b48a','#a98f62','#8a6e45','#d8c9a2']:['#c9812c','#a8541f','#d9a53a','#7a4a22'];
-  for(let i=0;i<2600;i++){g.fillStyle=lit[Math.floor(rn()*4)];g.globalAlpha=.55+rn()*.4;g.beginPath();g.ellipse(rn()*w,rn()*h,2+rn()*2.4,1+rn()*1.3,rn()*3.14,0,6.3);g.fill()}
-  if(B.tree==='pine'){g.strokeStyle='#7a5532';g.lineWidth=1;for(let i=0;i<1400;i++){const x=rn()*w,y=rn()*h,a=rn()*3.14;g.globalAlpha=.7;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(a)*6,y+Math.sin(a)*6);g.stroke()}}
+  for(let i=0;i<1300;i++){g.fillStyle=lit[Math.floor(rn()*4)];g.globalAlpha=.55+rn()*.4;g.beginPath();g.ellipse(rn()*w,rn()*h,2+rn()*2.4,1+rn()*1.3,rn()*3.14,0,6.3);g.fill()}
+  if(B.tree==='pine'){g.strokeStyle='#7a5532';g.lineWidth=1;for(let i=0;i<650;i++){const x=rn()*w,y=rn()*h,a=rn()*3.14;g.globalAlpha=.7;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(a)*6,y+Math.sin(a)*6);g.stroke()}}
   g.globalAlpha=1;
  }
- for(let i=0;i<90;i++)blot(rn()*w,rn()*h,26+rn()*44,10+rn()*20,dream?'rgba(120,255,225,.16)':'rgba(255,248,190,.15)');
+ for(let i=0;i<50;i++)blot(rn()*w,rn()*h,32+rn()*52,13+rn()*24,dream?'rgba(120,255,225,.16)':'rgba(255,248,190,.15)');
  if(!dream){
   for(let i=0;i<11;i++){const x=80+rn()*(w-160),y=140+rn()*(h-220),a=(rn()-.5)*.9,L=60+rn()*60,T=9+rn()*5;g.save();g.translate(x,y);g.rotate(a);
    g.fillStyle='rgba(20,30,15,.25)';g.beginPath();g.ellipse(0,T*.6,L*.55,T*.55,0,0,6.3);g.fill();
@@ -1198,18 +1198,28 @@ function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(started)up
 /* ================= title / avatar picker ================= */
 let pick=S.prof?S.prof.av:0;
 function buildPicker(){
- const box=$('avs');box.innerHTML='';
+ const box=$('avs');box.innerHTML='';const cs=[];
  AV.forEach((a,i)=>{const c=document.createElement('canvas');c.width=100;c.height=130;if(i===pick)c.className='sel';c.title=a.n;
-  portrait(c,()=>{ctx.translate(50,125);ctx.scale(1.2,1.2);drawHuman(0,0,a,1,0,0)});
-  c.onclick=()=>{pick=i;[...box.children].forEach((x,j)=>x.className=j===i?'sel':'')};box.appendChild(c)});
+  c.onclick=()=>{pick=i;[...box.children].forEach((x,j)=>x.className=j===i?'sel':'')};box.appendChild(c);cs.push(c)});
+ const order=[...AV.keys()].sort((x,y)=>(x===pick?-1:y===pick?-1:0)||x-y);let k=0;
+ const draw=()=>{const t=performance.now();while(k<order.length&&performance.now()-t<12){const i=order[k++],a=AV[i];portrait(cs[i],()=>{ctx.translate(50,125);ctx.scale(1.2,1.2);drawHuman(0,0,a,1,0,0)})}
+  if(k<order.length)setTimeout(draw,0);else if(!preW)setTimeout(prewarm,50)};
+ setTimeout(draw,0);
 }
+let preW=null;
+function prewarm(){const t0=performance.now();const cid=S.country&&BIOMES[S.country]?S.country:'au';try{preW={cid,sc:buildWorld(cid)};warmQ=[];const B=BIOMES[cid];const w=sc0=>0;
+  const tk=B.tree;if(FORESTK.includes(tk)){for(let v=0;v<4;v++){warmQ.push(()=>treeSpr(tk,v,false,false));warmQ.push(()=>treeSpr(tk,v,true,false))}}
+  ['a','b','c','d','e','f'].forEach(()=>0);
+  (preW.sc.under||[]).forEach(o=>{const k='u'+o.k+o.v+B.n;if(!warmQ.seen)warmQ.seen=new Set;if(!warmQ.seen.has(k)){warmQ.seen.add(k);warmQ.push(()=>underSpr(o.k,o.v,B))}});
+  for(let v=0;v<3;v++)warmQ.push(()=>bushSpr(B,v));setTimeout(warmRun,30)}catch(e){window.__preErr=String(e&&e.stack||e);preW=null}window.__pre=performance.now()-t0}
+let warmQ=[];function warmRun(){const t=performance.now();while(warmQ.length&&performance.now()-t<10){try{warmQ.shift()()}catch(e){}}if(warmQ.length)setTimeout(warmRun,0);else window.__warm=1}
 $('nm').value=S.prof?S.prof.n:'';
 if(S.prof)$('start').textContent='Continue';
 buildPicker();
 $('start').onclick=()=>{
  const n=($('nm').value.trim()||AV[pick].n).slice(0,14);S.prof={n,av:pick};save();
  $('title').style.display='none';
- if(!started){started=true;sc=buildWorld(S.country&&BIOMES[S.country]?S.country:'au');P.x=sc.spawn.x;P.y=sc.spawn.y;
+ if(!started){started=true;const cid0=S.country&&BIOMES[S.country]?S.country:'au';sc=(preW&&preW.cid===cid0)?preW.sc:buildWorld(cid0);preW=null;P.x=sc.spawn.x;P.y=sc.spawn.y;
   toast(S.dogs.length?'Welcome back, '+n+'!':'Welcome, '+n+'! Look for rustling bushes 🌿')}
 };
 addEventListener('beforeunload',save);
