@@ -848,7 +848,7 @@ const cam={x:0,y:0};
 let started=false,target=null,catchS=null,edit=false,tool='fence',parts=[];
 function enter(next,msg){
  const f=$('fade');f.style.opacity=1;
- setTimeout(()=>{sc=next;P.x=sc.spawn.x;P.y=sc.spawn.y;P.vx=P.vy=0;target=null;edit=false;catchS=null;
+ setTimeout(()=>{warmScene(next);sc=next;P.x=sc.spawn.x;P.y=sc.spawn.y;P.vx=P.vy=0;target=null;edit=false;catchS=null;
   $('decb').style.display=sc.kind==='home'?'':'none';$('bar').style.display='none';$('decb').classList.remove('on');
   $('homeb').textContent=sc.kind==='world'?'🏠':'🌍';$('cafeb').textContent=sc.kind==='cafe'?'🌍':'🍳';CO.x=P.x-30;CO.y=P.y+10;
   if(sc.kind==='world'){S.country=sc.id;save()}
@@ -1207,6 +1207,11 @@ function buildPicker(){
  setTimeout(draw,0);
 }
 let preW=null;
+function warmTasks(sc0){const q=[];if(!sc0||sc0.kind!=='world')return q;const B=BIOMES[sc0.id];if(!B)return q;const tk=B.tree,seen=new Set;
+ if(FORESTK.includes(tk))for(let v=0;v<4;v++){q.push(()=>treeSpr(tk,v,false,false));q.push(()=>treeSpr(tk,v,true,false));if(B.snow){q.push(()=>treeSpr(tk,v,false,true));q.push(()=>treeSpr(tk,v,true,true))}}
+ (sc0.under||[]).forEach(o=>{const k='u'+o.k+o.v;if(!seen.has(k)){seen.add(k);q.push(()=>underSpr(o.k,o.v,B))}});
+ for(let v=0;v<3;v++)q.push(()=>bushSpr(B,v));return q}
+function warmScene(sc0){warmTasks(sc0).forEach(f=>{try{f()}catch(e){}})}
 function prewarm(){const t0=performance.now();const cid=S.country&&BIOMES[S.country]?S.country:'au';try{preW={cid,sc:buildWorld(cid)};warmQ=[];const B=BIOMES[cid];const w=sc0=>0;
   const tk=B.tree;if(FORESTK.includes(tk)){for(let v=0;v<4;v++){warmQ.push(()=>treeSpr(tk,v,false,false));warmQ.push(()=>treeSpr(tk,v,true,false))}}
   ['a','b','c','d','e','f'].forEach(()=>0);
@@ -1218,9 +1223,12 @@ if(S.prof)$('start').textContent='Continue';
 buildPicker();
 $('start').onclick=()=>{
  const n=($('nm').value.trim()||AV[pick].n).slice(0,14);S.prof={n,av:pick};save();
- $('title').style.display='none';
- if(!started){started=true;const cid0=S.country&&BIOMES[S.country]?S.country:'au';sc=(preW&&preW.cid===cid0)?preW.sc:buildWorld(cid0);preW=null;P.x=sc.spawn.x;P.y=sc.spawn.y;
+ const sb=$('start');sb.textContent='Loading…';sb.disabled=true;
+ setTimeout(()=>{
+ $('title').style.display='none';sb.disabled=false;
+ if(!started){started=true;const cid0=S.country&&BIOMES[S.country]?S.country:'au';sc=(preW&&preW.cid===cid0)?preW.sc:buildWorld(cid0);preW=null;warmQ=[];warmScene(sc);P.x=sc.spawn.x;P.y=sc.spawn.y;
   toast(S.dogs.length?'Welcome back, '+n+'!':'Welcome, '+n+'! Look for rustling bushes 🌿')}
+ },30)
 };
 addEventListener('beforeunload',save);
 sc=buildWorld(BIOMES[S.country]?S.country:'au');P.x=sc.spawn.x;P.y=sc.spawn.y;setComp();
