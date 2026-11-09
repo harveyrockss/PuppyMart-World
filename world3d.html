@@ -27,6 +27,7 @@ a.btn{text-decoration:none;display:inline-block}
 #act.catch{animation:pul .8s infinite;background:radial-gradient(circle at 35% 30%,#fff3a8,#ffb23d)}@keyframes pul{50%{transform:scale(1.12);box-shadow:0 0 0 10px rgba(255,200,80,.35)}}
 #cbar{position:relative;height:34px;background:#e8eef6;border-radius:17px;margin:14px 6px}#czone{position:absolute;top:0;bottom:0;background:#6fd48a;border-radius:17px}#cmark{position:absolute;top:-5px;bottom:-5px;width:9px;margin-left:-4px;background:#ff5a8a;border-radius:5px;box-shadow:0 1px 4px rgba(0,0,0,.4)}
 @media(pointer:coarse){#act{bottom:176px}#cam{bottom:20px}}
+#cpor{animation:dbob .55s ease-in-out infinite alternate}#cpor.hop{animation:dhop .5s ease-out}@keyframes dbob{to{transform:translateY(-5px)}}@keyframes dhop{0%{transform:translateY(0)}40%{transform:translateY(-22px) rotate(-4deg)}100%{transform:translateY(0)}}
 </style></head><body>
 <div id="load">🐶 Loading island…</div>
 <div class="hud" id="top"><div class="pill">🪙 <span id="coins">0</span></div><div class="pill">🐾 <span id="found">0</span></div><a class="btn" href="./index.html">⬅ 2D game</a><div class="pill" id="place"></div><div class="pill" id="hidp">🌿 0 hiding</div></div>
