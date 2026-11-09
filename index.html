@@ -1030,9 +1030,10 @@ function friends(){
 function visit(d){S.st.visits=(S.st.visits||0)+1;save();const y=buildYard(d,false);enter(y,"👋 Visiting "+d.n+"'s home")}
 
 function menuModal(){
- openModal(`<h2>☰ Menu</h2><button class="big" id="mresume">▶ Resume</button><button class="big alt" id="mtitle" style="margin-top:8px">🧑‍🎤 Switch explorer / title screen</button><button class="big alt" id="mexit" style="margin-top:8px">💾 Save &amp; exit</button><div style="font-size:13px;opacity:.7;margin-top:10px">Your game saves automatically as you play.</div>`,()=>{
+ openModal(`<h2>☰ Menu</h2><button class="big" id="mresume">▶ Resume</button><button class="big alt" id="mtitle" style="margin-top:8px">🧑‍🎤 Switch explorer / title screen</button><button class="big alt" id="m3d" style="margin-top:8px">✨ Try 3D preview</button><button class="big alt" id="mexit" style="margin-top:8px">💾 Save &amp; exit</button><div style="font-size:13px;opacity:.7;margin-top:10px">Your game saves automatically as you play.</div>`,()=>{
   $('mresume').onclick=closeModal;
   $('mtitle').onclick=()=>{closeModal();save();target=null;pick=S.prof?S.prof.av:0;$('nm').value=S.prof?S.prof.n:'';buildPicker();$('start').textContent='Continue';$('title').style.display=''};
+  $('m3d').onclick=()=>{save();location.href='./world3d.html'};
   $('mexit').onclick=()=>{closeModal();save();target=null;$('byet').textContent='See you soon'+(S.prof?', '+S.prof.n:'')+'!';$('bye').style.display='flex'};
  });
 }
