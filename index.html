@@ -681,7 +681,7 @@ function drawDecor(d,t){
 
 /* ================= scenes ================= */
 function makeGround(B,w,h,sd,yard){
- const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');reseed(sd);
+ const c=document.createElement('canvas');c.width=w*2;c.height=h*2;const g=c.getContext('2d');g.scale(2,2);reseed(sd);
  const bg=g.createLinearGradient(0,0,0,h);bg.addColorStop(0,B.g1);bg.addColorStop(1,B.g2);g.fillStyle=bg;g.fillRect(0,0,w,h);
  for(let i=0;i<Math.round(w*h/6000);i++){const x=R(0,w),y=R(0,h),r=R(50,160);const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,B.bl[rnd()>.5?0:1]);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(x-r,y-r,r*2,r*2)}
  g.strokeStyle=B.tuft;g.lineWidth=1.6;for(let i=0;i<w*h/5000;i++){const x=R(0,w),y=R(0,h);g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+2,y-8,x+5,y-11);g.stroke()}
@@ -1141,7 +1141,7 @@ function render(){
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle='#7bbf86';ctx.fillRect(0,0,W,H);
  if(!sc)return;
  ctx.save();ctx.scale(zoom,zoom);ctx.translate(-cam.x,-cam.y);
- ctx.drawImage(sc.ground,0,0);
+ ctx.drawImage(sc.ground,0,0,sc.w,sc.h);
  const d=[];
  if(sc.kind==='world'){const B=BIOMES[sc.id];
   d.push([sc.lm.y+30,()=>drawLandmark(B.lm,sc.lm.x,sc.lm.y)]);
@@ -1168,7 +1168,7 @@ function render(){
  if(sc.kind==='world'&&isForest(BIOMES[sc.id]))drawForestLight(BIOMES[sc.id]);
  lightsAndTint();
  ctx.restore();
- const vg=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*.45,W/2,H/2,Math.max(W,H)*.75);vg.addColorStop(0,'rgba(80,30,100,0)');vg.addColorStop(1,'rgba(80,30,110,.25)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+ if(sc.id==='dr'){const vg=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*.3,W/2,H/2,Math.hypot(W,H)*.55);vg.addColorStop(0,'rgba(80,30,100,0)');vg.addColorStop(.5,'rgba(80,30,110,.06)');vg.addColorStop(1,'rgba(80,30,110,.22)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H)}
 }
 function lightsAndTint(){
  const dk=darkAmt();if(dk<=.02)return;const vw=W/zoom,vh=H/zoom;
