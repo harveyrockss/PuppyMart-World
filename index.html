@@ -51,6 +51,7 @@ textarea{height:70px;resize:none}
 #czone{position:absolute;top:0;bottom:0;background:linear-gradient(#9af0a8,#4cc26f);border-radius:14px}
 #cmark{position:absolute;top:-2px;bottom:-2px;width:8px;margin-left:-4px;background:#e2406f;border-radius:4px;box-shadow:0 0 6px rgba(226,64,111,.7)}
 #title{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 30%,#ffe8f3 0%,#c9b6f0 55%,#7f7fc4 100%);display:flex;flex-direction:column;align-items:center;justify-content:safe center;gap:10px;text-align:center;padding:14px;z-index:15;overflow:auto}
+
 #title h1{font-size:clamp(34px,8vw,64px);margin:0;color:#fff;text-shadow:0 3px 0 #c4577e,0 6px 18px rgba(90,40,120,.5)}
 #title p{max-width:460px;margin:0;font-size:16px;color:#5a3d6e;font-weight:600}
 #title input{font:700 20px ui-rounded,system-ui;text-align:center;border:4px solid #fff;border-radius:999px;padding:8px 18px;width:min(280px,80vw);color:#4a3550;user-select:text}
@@ -59,6 +60,12 @@ textarea{height:70px;resize:none}
 #avs canvas.sel{background:#fff6c8;border-color:#ffc54d;box-shadow:0 0 0 3px #ffb52e}
 #title .go{font:700 22px ui-rounded,system-ui;border:4px solid #fff;border-radius:999px;padding:10px 44px;color:#fff;background:linear-gradient(#ff9cc4,#e26a9f);box-shadow:0 6px 18px rgba(120,40,100,.4);cursor:pointer}
 #title small{opacity:.75;font-size:13px;font-weight:600}
+#title #tart{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#title>*:not(#tart){position:relative;z-index:1}
+#title h1{display:flex;flex-direction:column;align-items:center;line-height:.95;font-weight:900;font-family:ui-rounded,"SF Pro Rounded",system-ui,sans-serif;color:#ffd84d;text-shadow:0 -3px 0 #7a3a1a,0 3px 0 #7a3a1a,3px 0 0 #7a3a1a,-3px 0 0 #7a3a1a,2px 2px 0 #7a3a1a,-2px 2px 0 #7a3a1a,2px -2px 0 #7a3a1a,-2px -2px 0 #7a3a1a,0 8px 0 #a4511f,0 14px 22px rgba(60,30,10,.45)}
+#title h1 .l1{font-size:clamp(44px,12vw,84px);transform:rotate(-3deg)}
+#title h1 .l2{font-size:clamp(30px,8vw,56px);color:#fff;margin-top:2px;transform:rotate(-3deg);letter-spacing:.06em}
+#title p{background:rgba(255,255,255,.72);border-radius:16px;padding:8px 14px;color:#4a3550}
 #side{flex-wrap:wrap;max-height:calc(100vh - 150px);width:112px;gap:6px}
 .rb{width:44px;height:44px;font-size:20px}
 #toast{top:100px}
@@ -101,8 +108,42 @@ textarea{height:70px;resize:none}
 <div id="fade"></div>
 <div id="bye" style="display:none;position:fixed;inset:0;z-index:99;background:linear-gradient(160deg,#e9d8fa,#c9b6ee);flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;color:#5a3a7a;font-family:ui-rounded,system-ui,sans-serif"><div style="font-size:54px">👋🐶</div><h2 id="byet" style="margin:0">See you soon!</h2><p style="max-width:300px;margin:0">Your game is saved. You can close this app now: swipe up from the bottom and flick PuppyMart away.</p><button class="go" id="byeb">↩ Back to game</button></div>
 <div id="title">
- <div style="font-size:46px">🐶🌍✨</div>
- <h1>PuppyMart World</h1>
+ <svg id="tart" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<defs>
+<linearGradient id="tsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fc4ff"/><stop offset=".55" stop-color="#bfe8ff"/><stop offset="1" stop-color="#ffe7c2"/></linearGradient>
+<radialGradient id="tsun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff7d1" stop-opacity="1"/><stop offset=".35" stop-color="#ffe9a3" stop-opacity=".7"/><stop offset="1" stop-color="#ffe9a3" stop-opacity="0"/></radialGradient>
+<linearGradient id="th1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a7d8c0"/><stop offset="1" stop-color="#8cc7b0"/></linearGradient>
+<linearGradient id="th2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd27a"/><stop offset="1" stop-color="#5fb866"/></linearGradient>
+<linearGradient id="th3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ec65a"/><stop offset="1" stop-color="#3f9a4d"/></linearGradient>
+<linearGradient id="tpine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2f8f59"/><stop offset="1" stop-color="#1f6f45"/></linearGradient>
+<radialGradient id="tbush" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#7fdc6c"/><stop offset="1" stop-color="#2f9a4a"/></radialGradient>
+<radialGradient id="tbush2" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#69cf72"/><stop offset="1" stop-color="#27874a"/></radialGradient>
+</defs>
+<rect width="800" height="1200" fill="url(#tsky)"/>
+<circle cx="610" cy="270" r="230" fill="url(#tsun)"/>
+<circle cx="610" cy="270" r="48" fill="#fff6c8"/>
+<g fill="#fff" opacity=".92"><ellipse cx="170" cy="250" rx="90" ry="30"/><ellipse cx="225" cy="228" rx="60" ry="34"/><ellipse cx="120" cy="236" rx="50" ry="26"/>
+<ellipse cx="470" cy="150" rx="70" ry="22"/><ellipse cx="515" cy="134" rx="46" ry="26"/><ellipse cx="690" cy="430" rx="80" ry="24"/><ellipse cx="740" cy="412" rx="46" ry="26"/></g>
+<path d="M0 640 Q140 540 300 610 T620 590 T800 620 V1200 H0Z" fill="url(#th1)"/>
+<path d="M0 720 Q200 630 380 700 T800 690 V1200 H0Z" fill="url(#th2)"/>
+<g id="tpines" fill="url(#tpine)"><path d="M70 700 l38 -110 l38 110z"/><path d="M80 650 l28 -85 l28 85z" transform="translate(0,-10)"/><path d="M690 690 l34 -100 l34 100z"/><path d="M698 645 l26 -78 l26 78z" transform="translate(0,-8)"/><path d="M590 720 l26 -76 l26 76z"/></g>
+<g fill="#7a5230"><rect x="104" y="700" width="9" height="24"/><rect x="720" y="690" width="9" height="24"/><rect x="613" y="720" width="8" height="20"/></g>
+<path d="M0 820 Q220 740 430 810 T800 790 V1200 H0Z" fill="url(#th3)"/>
+<g><rect x="330" y="740" width="12" height="46" fill="#8a5a34"/><circle cx="336" cy="720" r="40" fill="#52b865"/><circle cx="312" cy="740" r="28" fill="#47a95c"/><circle cx="362" cy="738" r="30" fill="#5cc46f"/></g>
+<g><rect x="500" y="770" width="10" height="38" fill="#8a5a34"/><circle cx="505" cy="752" r="32" fill="#4fb263"/><circle cx="486" cy="768" r="22" fill="#44a35a"/><circle cx="526" cy="766" r="24" fill="#5cc46f"/></g>
+<g id="tdog1"><ellipse cx="636" cy="960" rx="92" ry="22" fill="#2a7a3a" opacity=".5"/>
+<ellipse cx="636" cy="850" rx="52" ry="48" fill="#e2b866"/><ellipse cx="596" cy="826" rx="18" ry="34" fill="#c99b45" transform="rotate(14 596 826)"/><ellipse cx="676" cy="826" rx="18" ry="34" fill="#c99b45" transform="rotate(-14 676 826)"/>
+<circle cx="620" cy="846" r="7.5" fill="#222"/><circle cx="652" cy="846" r="7.5" fill="#222"/><circle cx="622" cy="843" r="2.6" fill="#fff"/><circle cx="654" cy="843" r="2.6" fill="#fff"/>
+<ellipse cx="636" cy="868" rx="20" ry="14" fill="#f1d9a2"/><ellipse cx="636" cy="862" rx="8" ry="5.5" fill="#2b2b2b"/></g>
+<g><circle cx="600" cy="925" r="52" fill="url(#tbush2)"/><circle cx="650" cy="918" r="58" fill="url(#tbush)"/><circle cx="696" cy="934" r="46" fill="url(#tbush2)"/><circle cx="560" cy="944" r="40" fill="url(#tbush)"/><circle cx="636" cy="960" r="60" fill="url(#tbush)"/></g>
+<g id="tdog2"><g fill="#c98a4b"><ellipse cx="150" cy="842" rx="14" ry="40" transform="rotate(-24 150 842)"/><ellipse cx="196" cy="838" rx="14" ry="40" transform="rotate(20 196 838)"/></g></g>
+<g><circle cx="130" cy="935" r="58" fill="url(#tbush)"/><circle cx="190" cy="925" r="62" fill="url(#tbush2)"/><circle cx="238" cy="948" r="48" fill="url(#tbush)"/><circle cx="85" cy="960" r="44" fill="url(#tbush2)"/><circle cx="160" cy="968" r="58" fill="url(#tbush)"/></g>
+<g fill="#ffd84d"><circle cx="40" cy="1040" r="8"/><circle cx="330" cy="1010" r="7"/><circle cx="470" cy="1040" r="8"/><circle cx="760" cy="1030" r="8"/></g>
+<g fill="#ff7da8"><circle cx="90" cy="1090" r="8"/><circle cx="400" cy="1075" r="8"/><circle cx="560" cy="1100" r="7"/><circle cx="710" cy="1085" r="8"/></g>
+<g fill="#fff"><circle cx="210" cy="1060" r="7"/><circle cx="520" cy="1000" r="6"/><circle cx="640" cy="1050" r="7"/></g>
+<g fill="#fff" opacity=".9"><path d="M300 480 l5 -14 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5z"/><path d="M720 560 l4 -11 l4 11 l11 4 l-11 4 l-4 11 l-4 -11 l-11 -4z"/><path d="M90 520 l4 -11 l4 11 l11 4 l-11 4 l-4 11 l-4 -11 l-11 -4z"/></g>
+</svg>
+ <h1><span class="l1">PuppyMart</span><span class="l2">World</span></h1>
  <p>Pick your explorer, travel the world, and find the shy dogs hiding in the bushes.</p>
  <input id="nm" type="text" maxlength="14" placeholder="Your name" autocomplete="off">
  <div id="avs"></div>
